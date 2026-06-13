@@ -1,8 +1,7 @@
 {
   "command": {
     "name": "Impresion 3D por lotes",
-    "description": "Exporta una secuencia de archivos 3MF, STL u OBJ mientras cambia un parametro de usuario de Fusion entre cada exportacion.",
-    "tooltip_description": "Genera un lote de exportaciones de malla controladas por parametros desde un cuerpo, una ocurrencia o el componente raiz.<br/><br/>Elige un parametro de usuario, define el valor inicial, el incremento y la cantidad de archivos, y exporta cada variacion como 3MF, STL u OBJ.<br/><br/>Es util para etiquetas numeradas, rotulos, numeros de serie, variantes de tamano y otros modelos donde la geometria o el texto cambia de un archivo al siguiente.<br/><br/><a href=\"https://github.com/NathanNevesPrates/Fusion360-Batch-3D-Print\">GitHub: NathanNevesPrates/Fusion360-Batch-3D-Print</a>"
+    "description": "Exporta una secuencia de archivos 3MF, STL u OBJ mientras cambia un parametro de usuario de Fusion entre cada exportacion."
   },
   "buttons": {
     "export": "Exportar",

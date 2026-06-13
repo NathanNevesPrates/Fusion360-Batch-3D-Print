@@ -115,6 +115,8 @@ Edit `config.json` to change defaults and behavior. Common settings:
 
 The generated output folder is based on the editable File base name plus `behavior.folder_suffix`.
 
+After a successful export starts, the add-in remembers the last-used dialog settings in `batch3dprint_state.json`. This generated file is local to the installed add-in and is ignored by Git.
+
 ## User-facing text
 
 Edit files in `lang/` to change labels, descriptions, tooltips, notes, and messages.

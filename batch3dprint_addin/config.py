@@ -2,6 +2,8 @@ import copy
 import json
 import os
 
+STATE_FILENAME = 'batch3dprint_state.json'
+
 DEFAULT_CONFIG = {
     'language': 'auto',
     'defaults': {
@@ -42,6 +44,20 @@ DEFAULT_CONFIG = {
     }
 }
 
+LAST_USED_DEFAULT_KEYS = (
+    'parameter_name',
+    'parameter_mode',
+    'start_value',
+    'increment',
+    'file_count',
+    'export_format',
+    'unit_type',
+    'one_file_per_body',
+    'refinement',
+    'custom_refinement',
+    'output_parent_folder',
+)
+
 
 def _deep_merge(base, override):
     result = copy.deepcopy(base)
@@ -62,7 +78,36 @@ def load_config(addin_dir):
             user_config = json.load(handle)
     except Exception:
         user_config = {}
-    return _deep_merge(DEFAULT_CONFIG, user_config)
+    config = _deep_merge(DEFAULT_CONFIG, user_config)
+    last_used = load_state(addin_dir).get('last_used', {})
+    if isinstance(last_used, dict):
+        remembered_defaults = {
+            key: last_used[key]
+            for key in LAST_USED_DEFAULT_KEYS
+            if key in last_used
+        }
+        config['defaults'] = _deep_merge(config.get('defaults', {}), remembered_defaults)
+    return config
+
+
+def load_state(addin_dir):
+    path = os.path.join(addin_dir, STATE_FILENAME)
+    try:
+        with open(path, 'r', encoding='utf-8') as handle:
+            state = json.load(handle)
+            return state if isinstance(state, dict) else {}
+    except Exception:
+        return {}
+
+
+def save_state(addin_dir, state):
+    path = os.path.join(addin_dir, STATE_FILENAME)
+    try:
+        with open(path, 'w', encoding='utf-8') as handle:
+            json.dump(state, handle, indent=2, sort_keys=True)
+        return True
+    except Exception:
+        return False
 
 
 def get(config, dotted_path, default=None):

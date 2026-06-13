@@ -1,8 +1,7 @@
 {
   "command": {
     "name": "Batch 3D Print",
-    "description": "Export a sequence of 3MF, STL, or OBJ files while changing a Fusion user parameter between each export.",
-    "tooltip_description": "Generate a batch of parameter-driven mesh exports from one body, occurrence, or root component.<br/><br/>Choose a user parameter, set the starting value, increment, and file count, then export each variation as 3MF, STL, or OBJ.<br/><br/>This is useful for numbered tags, labels, serials, size variants, and other models where the geometry or text changes from one file to the next.<br/><br/><a href=\"https://github.com/NathanNevesPrates/Fusion360-Batch-3D-Print\">GitHub: NathanNevesPrates/Fusion360-Batch-3D-Print</a>"
+    "description": "Export a sequence of 3MF, STL, or OBJ files while changing a Fusion user parameter between each export."
   },
   "buttons": {
     "export": "Export",

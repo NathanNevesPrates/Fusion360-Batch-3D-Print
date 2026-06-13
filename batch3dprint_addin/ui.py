@@ -82,26 +82,20 @@ def build_inputs(cmd, config, localizer, parameter_names):
         adsk.core.DropDownStyles.TextListDropDownStyle
     )
     default_parameter = str(defaults.get('parameter_name', '') or '')
-    selected_parameter_found = False
+    selected_parameter = default_parameter if default_parameter in parameter_names else ''
     placeholder_label = localizer.choice_label('choices.parameter_select', ids.SELECT_PARAMETER_KEY, 'Select a parameter')
-    param_dropdown.listItems.add(placeholder_label, not bool(default_parameter), '')
+    param_dropdown.listItems.add(placeholder_label, not bool(selected_parameter), '')
     for name in parameter_names:
-        selected = bool(default_parameter and name == default_parameter)
+        selected = bool(selected_parameter and name == selected_parameter)
         param_dropdown.listItems.add(name, selected, '')
-        selected_parameter_found = selected_parameter_found or selected
     manual_label = localizer.choice_label('choices.parameter_select', ids.MANUAL_PARAMETER_KEY, 'Type name manually')
     param_dropdown.listItems.add(manual_label, False, '')
-    if default_parameter and not selected_parameter_found:
-        try:
-            param_dropdown.selectedItem = param_dropdown.listItems.itemByName(manual_label)
-        except Exception:
-            pass
     set_tooltip(param_dropdown, localizer, ids.PARAM_SELECT)
 
     manual_parameter = sequence_inputs.addStringValueInput(
         ids.PARAM_NAME,
         localizer.t('labels.{}'.format(ids.PARAM_NAME), 'Parameter name'),
-        default_parameter
+        selected_parameter
     )
     set_tooltip(manual_parameter, localizer, ids.PARAM_NAME)
 

@@ -1,8 +1,7 @@
 {
   "command": {
     "name": "Impression 3D en serie",
-    "description": "Exporte une suite de fichiers 3MF, STL ou OBJ tout en modifiant un parametre utilisateur Fusion entre chaque export.",
-    "tooltip_description": "Genere un lot d'exports de maillage pilotes par parametre a partir d'un corps, d'une occurrence ou du composant racine.<br/><br/>Choisissez un parametre utilisateur, definissez la valeur de depart, l'increment et le nombre de fichiers, puis exportez chaque variante en 3MF, STL ou OBJ.<br/><br/>C'est utile pour les etiquettes numerotees, les libelles, les numeros de serie, les variantes de taille et les autres modeles ou la geometrie ou le texte change d'un fichier a l'autre.<br/><br/><a href=\"https://github.com/NathanNevesPrates/Fusion360-Batch-3D-Print\">GitHub: NathanNevesPrates/Fusion360-Batch-3D-Print</a>"
+    "description": "Exporte une suite de fichiers 3MF, STL ou OBJ tout en modifiant un parametre utilisateur Fusion entre chaque export."
   },
   "buttons": {
     "export": "Exporter",

@@ -1,8 +1,7 @@
 {
   "command": {
     "name": "3D-Druck Stapel",
-    "description": "Exportiert eine Folge von 3MF-, STL- oder OBJ-Dateien, waehrend zwischen den Exporten ein Fusion-Benutzerparameter geaendert wird.",
-    "tooltip_description": "Erzeugt einen Satz parametergesteuerter Netzexporte aus einem Koerper, einer Komponente oder einer Stammkomponente.<br/><br/>Waehlen Sie einen Benutzerparameter, legen Sie Startwert, Schrittweite und Dateianzahl fest und exportieren Sie jede Variante als 3MF, STL oder OBJ.<br/><br/>Das ist hilfreich fuer nummerierte Schilder, Beschriftungen, Seriennummern, Groessenvarianten und andere Modelle, bei denen sich Geometrie oder Text von Datei zu Datei aendern.<br/><br/><a href=\"https://github.com/NathanNevesPrates/Fusion360-Batch-3D-Print\">GitHub: NathanNevesPrates/Fusion360-Batch-3D-Print</a>"
+    "description": "Exportiert eine Folge von 3MF-, STL- oder OBJ-Dateien, waehrend zwischen den Exporten ein Fusion-Benutzerparameter geaendert wird."
   },
   "buttons": {
     "export": "Exportieren",

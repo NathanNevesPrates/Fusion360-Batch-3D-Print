@@ -12,6 +12,8 @@
 - Changed the default language setting to `auto`.
 - Normalized displayed paths and added the configurable `behavior.path_separator` setting.
 - Changed the parameter picker to start with a blank `Select a parameter` placeholder instead of defaulting to manual entry.
+- Added persisted last-used dialog settings for parameter/export/refinement/output choices.
+- Improved File base name auto-fill by listening to Fusion's command selection event.
 - Kept the project under the MIT license.
 
 ## 0.2.0

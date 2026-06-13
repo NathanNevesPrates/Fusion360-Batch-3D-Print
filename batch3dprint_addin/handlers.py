@@ -1,3 +1,4 @@
+import math
 import os
 import traceback
 
@@ -5,7 +6,7 @@ import adsk.core
 import adsk.fusion
 
 from . import constants as ids
-from .config import get, load_config
+from .config import get, load_config, load_state, save_state
 from .exporter import export_one, extension_for_format, restore_parameter, set_parameter_value
 from .fusion_helpers import (
     app_ui_design,
@@ -134,7 +135,7 @@ class BatchCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
             build_inputs(command, config, localizer, parameter_names)
             update_visibility(command.commandInputs, config, localizer)
 
-            execute_handler = BatchCommandExecuteHandler(config, localizer)
+            execute_handler = BatchCommandExecuteHandler(config, localizer, self.addin_dir)
             command.execute.add(execute_handler)
             self.handlers.append(execute_handler)
 
@@ -146,6 +147,10 @@ class BatchCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
             command.inputChanged.add(input_changed_handler)
             self.handlers.append(input_changed_handler)
 
+            selection_handler = BatchSelectionHandler(config, localizer, input_changed_handler, command)
+            command.select.add(selection_handler)
+            self.handlers.append(selection_handler)
+
         except Exception:
             show_message('Batch 3D Print command creation failed:\n{}'.format(traceback.format_exc()))
 
@@ -156,7 +161,7 @@ class BatchInputChangedHandler(adsk.core.InputChangedEventHandler):
         self.config = config
         self.localizer = localizer
         self.auto_file_base = bool(get(config, 'behavior.auto_name_from_selection', True))
-        self.last_auto_file_base = ''
+        self.last_auto_file_base = str(get(config, 'defaults.file_base_name', 'BatchExport') or 'BatchExport')
 
     def notify(self, args):
         try:
@@ -189,11 +194,20 @@ class BatchInputChangedHandler(adsk.core.InputChangedEventHandler):
             return
         try:
             entity = geometry.selection(0).entity
-            name = sanitize_name(geometry_display_name(entity), 'Selection')
-            self.last_auto_file_base = name
-            file_base.value = name
+            self.update_file_base_from_entity(inputs, entity)
         except Exception:
             pass
+
+    def update_file_base_from_entity(self, inputs, entity):
+        if not self.auto_file_base:
+            return
+        file_base = get_input(inputs, ids.FILE_BASE)
+        if not file_base or not entity:
+            return
+        name = sanitize_name(geometry_display_name(entity), 'Selection')
+        self.last_auto_file_base = name
+        file_base.value = name
+        update_preview(inputs, self.config)
 
     def _browse_for_folder(self, inputs, changed_input):
         try:
@@ -214,6 +228,27 @@ class BatchInputChangedHandler(adsk.core.InputChangedEventHandler):
                 changed_input.value = False
             except Exception:
                 pass
+
+
+class BatchSelectionHandler(adsk.core.SelectionEventHandler):
+    def __init__(self, config, localizer, input_changed_handler, command):
+        super().__init__()
+        self.config = config
+        self.localizer = localizer
+        self.input_changed_handler = input_changed_handler
+        self.command = command
+
+    def notify(self, args):
+        try:
+            event_args = adsk.core.SelectionEventArgs.cast(args)
+            active_input = event_args.activeInput
+            if not active_input or active_input.id != ids.GEOMETRY:
+                return
+            selection = event_args.selection
+            entity = selection.entity if selection else None
+            self.input_changed_handler.update_file_base_from_entity(self.command.commandInputs, entity)
+        except Exception:
+            pass
 
 
 class BatchValidateInputsHandler(adsk.core.ValidateInputsEventHandler):
@@ -267,10 +302,11 @@ class BatchValidateInputsHandler(adsk.core.ValidateInputsEventHandler):
 
 
 class BatchCommandExecuteHandler(adsk.core.CommandEventHandler):
-    def __init__(self, config, localizer):
+    def __init__(self, config, localizer, addin_dir):
         super().__init__()
         self.config = config
         self.localizer = localizer
+        self.addin_dir = addin_dir
 
     def notify(self, args):
         try:
@@ -301,6 +337,8 @@ class BatchCommandExecuteHandler(adsk.core.CommandEventHandler):
 
             if not self._confirm_large_batch(ui, file_count):
                 return
+
+            self._save_last_used(inputs, parameter_name, parent_folder)
 
             if bool(get(self.config, 'behavior.create_unique_output_folder', False)):
                 output_folder = unique_folder_path(output_folder)
@@ -375,6 +413,32 @@ class BatchCommandExecuteHandler(adsk.core.CommandEventHandler):
             self._show_summary(output_folder, exported, failed, cancelled)
         except Exception:
             show_message('Batch 3D Print failed:\n{}'.format(traceback.format_exc()))
+
+    def _save_last_used(self, inputs, parameter_name, parent_folder):
+        try:
+            state = load_state(self.addin_dir)
+            state['last_used'] = {
+                'parameter_name': str(parameter_name or ''),
+                'parameter_mode': selected_choice_key(inputs, ids.PARAM_MODE, self.localizer, get(self.config, 'defaults.parameter_mode', 'number')),
+                'start_value': int(input_value(inputs, ids.START_VALUE, 1)),
+                'increment': int(input_value(inputs, ids.INCREMENT, 1)),
+                'file_count': int(input_value(inputs, ids.FILE_COUNT, 1)),
+                'export_format': selected_choice_key(inputs, ids.EXPORT_FORMAT, self.localizer, get(self.config, 'defaults.export_format', '3mf')),
+                'unit_type': selected_choice_key(inputs, ids.UNIT_TYPE, self.localizer, get(self.config, 'defaults.unit_type', 'millimeter')),
+                'one_file_per_body': bool_value(get_input(inputs, ids.ONE_FILE_PER_BODY), False),
+                'refinement': selected_choice_key(inputs, ids.REFINEMENT, self.localizer, get(self.config, 'defaults.refinement', 'medium')),
+                'custom_refinement': {
+                    'surface_deviation_cm': float(input_value(inputs, ids.SURFACE_DEVIATION, 0.0) or 0.0),
+                    'normal_deviation_deg': float(input_value(inputs, ids.NORMAL_DEVIATION, 0.0) or 0.0) * 180.0 / math.pi,
+                    'maximum_edge_length_cm': float(input_value(inputs, ids.MAX_EDGE_LENGTH, 0.0) or 0.0),
+                    'aspect_ratio': float(input_value(inputs, ids.ASPECT_RATIO, 0.0) or 0.0)
+                },
+                'output_parent_folder': expand_folder(parent_folder)
+            }
+            if save_state(self.addin_dir, state):
+                debug_log('Saved last-used command settings.')
+        except Exception:
+            debug_log('Failed to save last-used command settings.')
 
     def _read_export_settings(self, inputs):
         custom = {
