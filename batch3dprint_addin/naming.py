@@ -42,7 +42,18 @@ def expand_folder(path):
     text = str(path or '').strip()
     if not text:
         text = default_desktop()
-    return os.path.expanduser(os.path.expandvars(text))
+    return os.path.normpath(os.path.expanduser(os.path.expandvars(text)))
+
+
+def display_path(path, config=None):
+    text = os.path.normpath(str(path or ''))
+    behavior = config.get('behavior', {}) if isinstance(config, dict) else {}
+    separator = str(behavior.get('path_separator', 'system') or 'system').lower()
+    if separator in ('forward', 'slash', '/'):
+        return text.replace('\\', '/')
+    if separator in ('backward', 'backslash', '\\'):
+        return text.replace('/', '\\')
+    return text.replace('/', os.sep).replace('\\', os.sep)
 
 
 def batch_folder_name(file_base, suffix):
@@ -52,4 +63,4 @@ def batch_folder_name(file_base, suffix):
 
 
 def build_output_folder(parent_folder, file_base, suffix):
-    return os.path.join(expand_folder(parent_folder), batch_folder_name(file_base, suffix))
+    return os.path.normpath(os.path.join(expand_folder(parent_folder), batch_folder_name(file_base, suffix)))

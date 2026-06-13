@@ -14,6 +14,59 @@ def app_ui_design():
     return app, ui, design
 
 
+def debug_log(text):
+    try:
+        app = adsk.core.Application.get()
+        if app:
+            app.log('[Batch3DPrint] {}'.format(str(text)))
+    except Exception:
+        pass
+
+
+def fusion_language_locale(app=None):
+    app = app or adsk.core.Application.get()
+    if not app:
+        debug_log('No Fusion app available for language detection; defaulting to en-us.')
+        return 'en-us'
+    try:
+        language = app.preferences.generalPreferences.userLanguage
+    except Exception:
+        debug_log('Failed to read Fusion userLanguage; defaulting to en-us.')
+        return 'en-us'
+
+    enum_mappings = [
+        ('EnglishLanguage', 'en-us'),
+        ('GermanLanguage', 'de-de'),
+        ('FrenchLanguage', 'fr-fr'),
+        ('SpanishLanguage', 'es-es'),
+        ('PortugueseBrazilianLanguage', 'pt-br')
+    ]
+
+    try:
+        user_languages = adsk.core.UserLanguages
+    except Exception:
+        user_languages = None
+
+    if user_languages:
+        for attr_name, locale in enum_mappings:
+            try:
+                enum_value = getattr(user_languages, attr_name)
+                if language == enum_value:
+                    
+                    return locale
+            except Exception:
+                pass
+
+    language_name = str(language)
+    for attr_name, locale in enum_mappings:
+        if attr_name in language_name:
+            
+            return locale
+
+    debug_log('No language mapping matched; defaulting to en-us.')
+    return 'en-us'
+
+
 def show_message(text):
     try:
         _, ui, _ = app_ui_design()

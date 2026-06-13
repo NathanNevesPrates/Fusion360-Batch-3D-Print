@@ -1,11 +1,12 @@
+import os
 import traceback
 
 import adsk.core
 
 from .constants import CMD_DESCRIPTION, CMD_ID, CMD_NAME, PANEL_ID, WORKSPACE_ID
 from .config import get, load_config
+from .fusion_helpers import debug_log, fusion_language_locale, show_message
 from .handlers import BatchCommandCreatedHandler
-from .fusion_helpers import show_message
 from .localization import Localizer
 
 _app = None
@@ -20,13 +21,43 @@ def run(context, addin_dir):
         _ui = _app.userInterface
 
         config = load_config(addin_dir)
-        localizer = Localizer(addin_dir, get(config, 'language', 'en'))
+        locale = get(config, 'language', 'auto')
+        if str(locale or 'auto').lower() == 'auto':
+            locale = fusion_language_locale(_app)
+        debug_log('Resolved startup locale: {}'.format(locale))
+        
+        localizer = Localizer(addin_dir, locale)
         command_name = localizer.t('command.name', CMD_NAME)
         command_description = localizer.t('command.description', CMD_DESCRIPTION)
+        command_tooltip_description = localizer.t('command.tooltip_description', '')
+        resource_dir = os.path.join(addin_dir, 'resources')
+        toolclip_path = os.path.join(resource_dir, 'toolclip.svg')
 
         command_definition = _ui.commandDefinitions.itemById(CMD_ID)
         if not command_definition:
-            command_definition = _ui.commandDefinitions.addButtonDefinition(CMD_ID, command_name, command_description)
+            command_definition = _ui.commandDefinitions.addButtonDefinition(
+                CMD_ID,
+                command_name,
+                command_description,
+                resource_dir
+            )
+
+        try:
+            command_definition.tooltip = command_description
+        except Exception:
+            pass
+
+        try:
+            if command_tooltip_description:
+                command_definition.tooltipDescription = command_tooltip_description
+        except Exception:
+            pass
+
+        try:
+            if os.path.isfile(toolclip_path):
+                command_definition.toolClipFilename = toolclip_path
+        except Exception:
+            pass
 
         created_handler = BatchCommandCreatedHandler(_handlers, addin_dir)
         command_definition.commandCreated.add(created_handler)

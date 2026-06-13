@@ -12,3 +12,6 @@ dist/
 build/
 
 *.bak
+
+Thumbs.db
+.DS_Store

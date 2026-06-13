@@ -11,10 +11,12 @@ from .fusion_helpers import (
     app_ui_design,
     bool_value,
     compute_design,
+    debug_log,
     entity_token,
     geometry_display_name,
     get_input,
     get_user_parameter_names,
+    fusion_language_locale,
     open_folder_dialog,
     open_folder_in_os,
     resolve_entity_from_token,
@@ -22,7 +24,7 @@ from .fusion_helpers import (
     show_message,
 )
 from .localization import Localizer
-from .naming import build_output_folder, expand_folder, sanitize_name, unique_folder_path, unique_path
+from .naming import build_output_folder, display_path, expand_folder, sanitize_name, unique_folder_path, unique_path
 from .ui import CHOICE_PATHS, build_inputs
 
 
@@ -36,10 +38,16 @@ def manual_parameter_label(localizer):
     return localizer.choice_label('choices.parameter_select', ids.MANUAL_PARAMETER_KEY, 'Type name manually')
 
 
+def placeholder_parameter_label(localizer):
+    return localizer.choice_label('choices.parameter_select', ids.SELECT_PARAMETER_KEY, 'Select a parameter')
+
+
 def selected_parameter_name(inputs, localizer):
     dropdown = get_input(inputs, ids.PARAM_SELECT)
     manual = get_input(inputs, ids.PARAM_NAME)
     selected = selected_item_name(dropdown)
+    if selected == placeholder_parameter_label(localizer):
+        return ''
     if selected == manual_parameter_label(localizer):
         try:
             return manual.value.strip()
@@ -78,7 +86,7 @@ def update_preview(inputs, config):
         return
     folder = build_output_folder(parent.value, file_base.value, get(config, 'behavior.folder_suffix', '_BatchExport'))
     try:
-        preview.value = folder
+        preview.value = display_path(folder, config)
     except Exception:
         pass
 
@@ -114,8 +122,13 @@ class BatchCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
             event_args = adsk.core.CommandCreatedEventArgs.cast(args)
             command = event_args.command
             config = load_config(self.addin_dir)
-            localizer = Localizer(self.addin_dir, get(config, 'language', 'en'))
-            _, _, design = app_ui_design()
+            app, _, design = app_ui_design()
+            locale = get(config, 'language', 'auto')
+            
+            if str(locale or 'auto').lower() == 'auto':
+                locale = fusion_language_locale(app)
+            debug_log('Resolved command locale: {}'.format(locale))
+            localizer = Localizer(self.addin_dir, locale)
             parameter_names = get_user_parameter_names(design)
 
             build_inputs(command, config, localizer, parameter_names)
@@ -191,7 +204,7 @@ class BatchInputChangedHandler(adsk.core.InputChangedEventHandler):
             title = self.localizer.t('dialog.folder_title', 'Choose output folder')
             folder = open_folder_dialog(expand_folder(initial), title)
             if folder and folder_input:
-                folder_input.value = folder
+                folder_input.value = display_path(folder, self.config)
             try:
                 changed_input.value = False
             except Exception:
@@ -339,9 +352,9 @@ class BatchCommandExecuteHandler(adsk.core.CommandEventHandler):
                         if ok:
                             exported.append(file_path)
                         else:
-                            failed.append(file_path)
+                            failed.append(display_path(file_path, self.config))
                     except Exception as export_error:
-                        failed.append('{} ({})'.format(file_path, export_error))
+                        failed.append('{} ({})'.format(display_path(file_path, self.config), export_error))
 
                     progress.progressValue = index + 1
                     adsk.doEvents()
@@ -401,7 +414,7 @@ class BatchCommandExecuteHandler(adsk.core.CommandEventHandler):
 
     def _show_summary(self, output_folder, exported, failed, cancelled):
         message = self.localizer.t('messages.summary', 'Export folder:\n{folder}\n\nExported: {exported}').format(
-            folder=output_folder,
+            folder=display_path(output_folder, self.config),
             exported=len(exported)
         )
         if cancelled:

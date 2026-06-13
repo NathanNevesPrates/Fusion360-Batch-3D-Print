@@ -2,6 +2,11 @@
 
 Batch 3D Print exports repeated mesh files while changing a Fusion user parameter before each export. It is meant for models that contain a parameter-driven label, serial number, size marker, or similar variation.
 
+## License
+
+This project is available under the PolyForm Noncommercial 1.0.0 license.
+You can use, copy, modify, and share it, but you cannot sell it or monetize it.
+
 ## What it exports
 
 The command can export one selected body, occurrence, or root component.
@@ -103,7 +108,8 @@ Edit `config.json` to change defaults and behavior. Common settings:
     "folder_suffix": "_BatchExport",
     "restore_parameter_after_export": true,
     "avoid_overwriting_files": true,
-    "auto_name_from_selection": true
+    "auto_name_from_selection": true,
+    "path_separator": "system"
   }
 }
 ```
@@ -112,7 +118,7 @@ The generated output folder is based on the editable File base name plus `behavi
 
 ## User-facing text
 
-Edit `strings/en.json` to change labels, descriptions, tooltips, notes, and messages. This is structured so future translation support can be added without hunting through the source code.
+Edit files in `lang/` to change labels, descriptions, tooltips, notes, and messages.
 
 ## Source layout
 
@@ -124,10 +130,10 @@ batch3dprint_addin/ui.py          Dialog construction
 batch3dprint_addin/exporter.py    Export and parameter logic
 batch3dprint_addin/fusion_helpers.py Fusion API helpers
 batch3dprint_addin/config.py      Config loading/defaults
-batch3dprint_addin/localization.py String loading helpers
+batch3dprint_addin/localization.py Language loading helpers
 batch3dprint_addin/naming.py      File/folder naming helpers
 config.json                       Editable default behavior
-strings/en.json                   Editable user-facing text
+lang/en-us.json                   Editable English user-facing text
 ```
 
 ## Notes

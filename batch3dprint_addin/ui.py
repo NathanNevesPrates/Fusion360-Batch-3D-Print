@@ -5,7 +5,7 @@ import adsk.core
 
 from . import constants as ids
 from .config import get
-from .naming import build_output_folder, default_desktop, expand_folder
+from .naming import build_output_folder, default_desktop, display_path, expand_folder
 
 
 CHOICE_PATHS = {
@@ -83,12 +83,19 @@ def build_inputs(cmd, config, localizer, parameter_names):
     )
     default_parameter = str(defaults.get('parameter_name', '') or '')
     selected_parameter_found = False
+    placeholder_label = localizer.choice_label('choices.parameter_select', ids.SELECT_PARAMETER_KEY, 'Select a parameter')
+    param_dropdown.listItems.add(placeholder_label, not bool(default_parameter), '')
     for name in parameter_names:
         selected = bool(default_parameter and name == default_parameter)
         param_dropdown.listItems.add(name, selected, '')
         selected_parameter_found = selected_parameter_found or selected
     manual_label = localizer.choice_label('choices.parameter_select', ids.MANUAL_PARAMETER_KEY, 'Type name manually')
-    param_dropdown.listItems.add(manual_label, not selected_parameter_found, '')
+    param_dropdown.listItems.add(manual_label, False, '')
+    if default_parameter and not selected_parameter_found:
+        try:
+            param_dropdown.selectedItem = param_dropdown.listItems.itemByName(manual_label)
+        except Exception:
+            pass
     set_tooltip(param_dropdown, localizer, ids.PARAM_SELECT)
 
     manual_parameter = sequence_inputs.addStringValueInput(
@@ -237,7 +244,7 @@ def build_inputs(cmd, config, localizer, parameter_names):
     folder = output_inputs.addStringValueInput(
         ids.OUTPUT_PARENT_FOLDER,
         localizer.t('labels.{}'.format(ids.OUTPUT_PARENT_FOLDER), 'Output parent folder'),
-        parent_folder
+        display_path(parent_folder, config)
     )
     try:
         folder.isEnabled = False
@@ -258,7 +265,7 @@ def build_inputs(cmd, config, localizer, parameter_names):
     preview = output_inputs.addStringValueInput(
         ids.OUTPUT_FOLDER_PREVIEW,
         localizer.t('labels.{}'.format(ids.OUTPUT_FOLDER_PREVIEW), 'Generated export folder'),
-        preview_path
+        display_path(preview_path, config)
     )
     try:
         preview.isEnabled = False

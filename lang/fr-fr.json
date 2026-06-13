@@ -1,0 +1,90 @@
+{
+  "command": {
+    "name": "Impression 3D en serie",
+    "description": "Exporte une suite de fichiers 3MF, STL ou OBJ tout en modifiant un parametre utilisateur Fusion entre chaque export.",
+    "tooltip_description": "Genere un lot d'exports de maillage pilotes par parametre a partir d'un corps, d'une occurrence ou du composant racine.<br/><br/>Choisissez un parametre utilisateur, definissez la valeur de depart, l'increment et le nombre de fichiers, puis exportez chaque variante en 3MF, STL ou OBJ.<br/><br/>C'est utile pour les etiquettes numerotees, les libelles, les numeros de serie, les variantes de taille et les autres modeles ou la geometrie ou le texte change d'un fichier a l'autre.<br/><br/><a href=\"https://github.com/NathanNevesPrates/Fusion360-Batch-3D-Print\">GitHub: NathanNevesPrates/Fusion360-Batch-3D-Print</a>"
+  },
+  "buttons": {
+    "export": "Exporter",
+    "cancel": "Annuler"
+  },
+  "titles": {
+    "progress": "Impression 3D en serie"
+  },
+  "dialog": {
+    "folder_title": "Choisir le dossier parent de sortie"
+  },
+  "groups": {
+    "geometry": "Geometrie",
+    "sequence": "Sequence du parametre",
+    "export": "Parametres d'export",
+    "output": "Sortie"
+  },
+  "labels": {
+    "geometry": "Geometrie a exporter",
+    "paramSelect": "Parametre utilisateur",
+    "paramName": "Nom manuel du parametre",
+    "paramMode": "Mode de valeur du parametre",
+    "textFormat": "Format de texte",
+    "startValue": "Valeur de depart",
+    "increment": "Increment",
+    "fileCount": "Nombre de fichiers",
+    "exportFormat": "Format",
+    "unitType": "Unites",
+    "refinement": "Raffinement",
+    "surfaceDeviation": "Deviation de surface",
+    "normalDeviation": "Deviation normale",
+    "maximumEdgeLength": "Longueur maximale d'arete",
+    "aspectRatio": "Rapport d'aspect",
+    "oneFilePerBody": "Un fichier par corps",
+    "fileBase": "Nom de base du fichier",
+    "outputParentFolder": "Dossier parent de sortie",
+    "browseFolder": "Choisir un dossier...",
+    "outputFolderPreview": "Dossier d'export genere",
+    "notes": "Notes"
+  },
+  "prompts": {
+    "geometry": "Selectionnez un corps, une occurrence ou le composant racine."
+  },
+  "choices": {
+    "parameter_select": {
+      "__select_parameter__": "Selectionner un parametre",
+      "__manual_parameter__": "Saisir le nom manuellement"
+    },
+    "parameter_modes": {
+      "number": "Nombre uniquement",
+      "text": "Etiquette texte avec format"
+    },
+    "export_formats": {
+      "3mf": "3MF",
+      "stl_binary": "STL binaire",
+      "stl_ascii": "STL ASCII",
+      "obj": "OBJ"
+    },
+    "unit_types": {
+      "millimeter": "Millimetre",
+      "centimeter": "Centimetre",
+      "meter": "Metre",
+      "inch": "Pouce",
+      "foot": "Pied"
+    },
+    "refinement": {
+      "low": "Faible",
+      "medium": "Moyen",
+      "high": "Eleve",
+      "custom": "Personnalise"
+    }
+  },
+  "notes": {
+    "command": "Flux : definir le parametre -> recalculer la conception -> exporter le maillage -> repeter.\nLe parametre selectionne est restaure apres le lot, sauf si cela est desactive dans config.json.\nL'aperçu et le nombre de triangles ne sont pas affiches volontairement, car le modele change pendant le lot.\nCette commande exporte toujours des fichiers ; elle n'envoie pas chaque maillage genere a un utilitaire d'impression."
+  },
+  "messages": {
+    "no_design": "Ouvrez une conception Fusion avant d'executer Impression 3D en serie.",
+    "parameter_missing": "Aucun parametre utilisateur nomme \"{name}\" n'a ete trouve. Les noms de parametres respectent la casse.",
+    "progress": "Exportation de %v sur %m fichiers...",
+    "large_batch_warning": "Vous etes sur le point d'exporter {count} fichiers. Le seuil d'avertissement est {threshold}. Continuer ?",
+    "summary": "Dossier d'export :\n{folder}\n\nExportes : {exported}",
+    "cancelled": "Annule avant la fin.",
+    "failed": "Echecs : {failed}\n{details}"
+  }
+}

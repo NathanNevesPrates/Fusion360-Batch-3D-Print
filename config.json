@@ -1,5 +1,5 @@
 {
-  "language": "en",
+  "language": "auto",
   "defaults": {
     "parameter_name": "",
     "parameter_mode": "number",
@@ -16,7 +16,7 @@
       "maximum_edge_length_cm": 0.0,
       "aspect_ratio": 0.0
     },
-    "file_base_name": "BatchExport",
+    "file_base_name": "File",
     "output_parent_folder": "",
     "one_file_per_body": false
   },
@@ -33,6 +33,7 @@
     "avoid_overwriting_files": true,
     "create_unique_output_folder": false,
     "auto_name_from_selection": true,
-    "auto_open_output_folder": false
+    "auto_open_output_folder": false,
+    "path_separator": "system"
   }
 }

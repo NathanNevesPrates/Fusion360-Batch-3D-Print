@@ -3,7 +3,7 @@ import json
 import os
 
 DEFAULT_CONFIG = {
-    'language': 'en',
+    'language': 'auto',
     'defaults': {
         'parameter_name': '',
         'parameter_mode': 'number',
@@ -20,7 +20,7 @@ DEFAULT_CONFIG = {
             'maximum_edge_length_cm': 0.0,
             'aspect_ratio': 0.0
         },
-        'file_base_name': 'BatchExport',
+        'file_base_name': 'File',
         'output_parent_folder': '',
         'one_file_per_body': False
     },
@@ -37,7 +37,8 @@ DEFAULT_CONFIG = {
         'avoid_overwriting_files': True,
         'create_unique_output_folder': False,
         'auto_name_from_selection': True,
-        'auto_open_output_folder': False
+        'auto_open_output_folder': False,
+        'path_separator': 'system'
     }
 }
 

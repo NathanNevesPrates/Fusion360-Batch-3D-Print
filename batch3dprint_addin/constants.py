@@ -1,9 +1,10 @@
-CMD_ID = 'Batch3DPrint.Command'
+CMD_ID = 'Batch3DPrint_Command'
 CMD_NAME = 'Batch 3D Print'
 CMD_DESCRIPTION = 'Batch export mesh files while incrementing a Fusion user parameter.'
 WORKSPACE_ID = 'FusionSolidEnvironment'
-PANEL_ID = 'SolidScriptsAddinsPanel'
+PANEL_ID = 'MakePanel'
 MANUAL_PARAMETER_KEY = '__manual_parameter__'
+SELECT_PARAMETER_KEY = '__select_parameter__'
 
 GEOMETRY_FILTERS = ('Bodies', 'Occurrences', 'RootComponents')
 

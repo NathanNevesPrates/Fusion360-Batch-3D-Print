@@ -2,26 +2,43 @@ import json
 import os
 
 
+def _deep_merge(base, override):
+    result = dict(base) if isinstance(base, dict) else {}
+    if not isinstance(override, dict):
+        return result
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(result.get(key), dict):
+            result[key] = _deep_merge(result[key], value)
+        else:
+            result[key] = value
+    return result
+
+
 class Localizer:
-    def __init__(self, addin_dir, language='en'):
+    def __init__(self, addin_dir, language='en-us'):
         self.addin_dir = addin_dir
-        self.language = language or 'en'
+        self.language = language or 'en-us'
         self.data = {}
         self._load()
 
     def _load(self):
+        language = self.language.lower().replace('_', '-')
+        aliases = {
+            'en': 'en-us',
+            'pt': 'pt-br',
+            'es': 'es-es'
+        }
+        language = aliases.get(language, language)
         paths = [
-            os.path.join(self.addin_dir, 'strings', '{}.json'.format(self.language)),
-            os.path.join(self.addin_dir, 'strings', 'en.json')
+            os.path.join(self.addin_dir, 'lang', 'en-us.json'),
+            os.path.join(self.addin_dir, 'lang', '{}.json'.format(language))
         ]
         for path in paths:
             try:
                 with open(path, 'r', encoding='utf-8') as handle:
-                    self.data = json.load(handle)
-                return
+                    self.data = _deep_merge(self.data, json.load(handle))
             except Exception:
                 pass
-        self.data = {}
 
     def node(self, dotted_path, default=None):
         node = self.data

@@ -1,0 +1,90 @@
+{
+  "command": {
+    "name": "Impressao 3D em lote",
+    "description": "Exporte uma sequencia de arquivos 3MF, STL ou OBJ enquanto altera um parametro de usuario do Fusion entre cada exportacao.",
+    "tooltip_description": "Gere uma serie de exportacoes de malha controladas por parametro a partir de um corpo, ocorrencia ou componente raiz.<br/><br/>Escolha um parametro de usuario, defina o valor inicial, incremento e quantidade de arquivos, e exporte cada variacao como 3MF, STL ou OBJ.<br/><br/>Isso e util para etiquetas numeradas, rotulos, numeros de serie, variacoes de tamanho e outros modelos em que a geometria ou texto muda de um arquivo para o proximo.<br/><br/><a href=\"https://github.com/NathanNevesPrates/Fusion360-Batch-3D-Print\">GitHub: NathanNevesPrates/Fusion360-Batch-3D-Print</a>"
+  },
+  "buttons": {
+    "export": "Exportar",
+    "cancel": "Cancelar"
+  },
+  "titles": {
+    "progress": "Impressao 3D em lote"
+  },
+  "dialog": {
+    "folder_title": "Escolha a pasta principal de saida"
+  },
+  "groups": {
+    "geometry": "Geometria",
+    "sequence": "Sequencia do parametro",
+    "export": "Configuracoes de exportacao",
+    "output": "Saida"
+  },
+  "labels": {
+    "geometry": "Geometria para exportar",
+    "paramSelect": "Parametro de usuario",
+    "paramName": "Nome manual do parametro",
+    "paramMode": "Modo de valor do parametro",
+    "textFormat": "Formato do texto",
+    "startValue": "Valor inicial",
+    "increment": "Incremento",
+    "fileCount": "Numero de arquivos",
+    "exportFormat": "Formato",
+    "unitType": "Unidades",
+    "refinement": "Refinamento",
+    "surfaceDeviation": "Desvio de superficie",
+    "normalDeviation": "Desvio normal",
+    "maximumEdgeLength": "Comprimento maximo da aresta",
+    "aspectRatio": "Proporcao",
+    "oneFilePerBody": "Um arquivo por corpo",
+    "fileBase": "Nome base do arquivo",
+    "outputParentFolder": "Pasta principal de saida",
+    "browseFolder": "Escolher pasta...",
+    "outputFolderPreview": "Pasta de exportacao gerada",
+    "notes": "Observacoes"
+  },
+  "prompts": {
+    "geometry": "Selecione um corpo, ocorrencia ou componente raiz."
+  },
+  "choices": {
+    "parameter_select": {
+      "__select_parameter__": "Selecione um parametro",
+      "__manual_parameter__": "Digitar nome manualmente"
+    },
+    "parameter_modes": {
+      "number": "Apenas numero",
+      "text": "Rotulo de texto usando formato"
+    },
+    "export_formats": {
+      "3mf": "3MF",
+      "stl_binary": "STL binario",
+      "stl_ascii": "STL ASCII",
+      "obj": "OBJ"
+    },
+    "unit_types": {
+      "millimeter": "Milimetro",
+      "centimeter": "Centimetro",
+      "meter": "Metro",
+      "inch": "Polegada",
+      "foot": "Pe"
+    },
+    "refinement": {
+      "low": "Baixo",
+      "medium": "Medio",
+      "high": "Alto",
+      "custom": "Personalizado"
+    }
+  },
+  "notes": {
+    "command": "Fluxo: definir parametro -> recalcular projeto -> exportar malha -> repetir.\nO parametro selecionado e restaurado depois do lote, a menos que isso seja desativado no config.json.\nPrevia e contagem de triangulos nao sao mostradas porque o modelo muda durante o lote.\nEste comando sempre exporta arquivos; ele nao envia cada malha gerada para um utilitario de impressao."
+  },
+  "messages": {
+    "no_design": "Abra um projeto do Fusion antes de executar Impressao 3D em lote.",
+    "parameter_missing": "Nenhum parametro de usuario chamado \"{name}\" foi encontrado. Nomes de parametros diferenciam maiusculas e minusculas.",
+    "progress": "Exportando %v de %m arquivos...",
+    "large_batch_warning": "Voce esta prestes a exportar {count} arquivos. O limite de aviso e {threshold}. Continuar?",
+    "summary": "Pasta de exportacao:\n{folder}\n\nExportados: {exported}",
+    "cancelled": "Cancelado antes de concluir.",
+    "failed": "Falharam: {failed}\n{details}"
+  }
+}

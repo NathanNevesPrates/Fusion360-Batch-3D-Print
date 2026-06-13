@@ -1,0 +1,90 @@
+{
+  "command": {
+    "name": "3D-Druck Stapel",
+    "description": "Exportiert eine Folge von 3MF-, STL- oder OBJ-Dateien, waehrend zwischen den Exporten ein Fusion-Benutzerparameter geaendert wird.",
+    "tooltip_description": "Erzeugt einen Satz parametergesteuerter Netzexporte aus einem Koerper, einer Komponente oder einer Stammkomponente.<br/><br/>Waehlen Sie einen Benutzerparameter, legen Sie Startwert, Schrittweite und Dateianzahl fest und exportieren Sie jede Variante als 3MF, STL oder OBJ.<br/><br/>Das ist hilfreich fuer nummerierte Schilder, Beschriftungen, Seriennummern, Groessenvarianten und andere Modelle, bei denen sich Geometrie oder Text von Datei zu Datei aendern.<br/><br/><a href=\"https://github.com/NathanNevesPrates/Fusion360-Batch-3D-Print\">GitHub: NathanNevesPrates/Fusion360-Batch-3D-Print</a>"
+  },
+  "buttons": {
+    "export": "Exportieren",
+    "cancel": "Abbrechen"
+  },
+  "titles": {
+    "progress": "3D-Druck Stapel"
+  },
+  "dialog": {
+    "folder_title": "Ausgabe-Hauptordner waehlen"
+  },
+  "groups": {
+    "geometry": "Geometrie",
+    "sequence": "Parameterfolge",
+    "export": "Exporteinstellungen",
+    "output": "Ausgabe"
+  },
+  "labels": {
+    "geometry": "Zu exportierende Geometrie",
+    "paramSelect": "Benutzerparameter",
+    "paramName": "Manueller Parametername",
+    "paramMode": "Parameterwertmodus",
+    "textFormat": "Textformat",
+    "startValue": "Startwert",
+    "increment": "Schrittweite",
+    "fileCount": "Anzahl der Dateien",
+    "exportFormat": "Format",
+    "unitType": "Einheiten",
+    "refinement": "Verfeinerung",
+    "surfaceDeviation": "Oberflaechenabweichung",
+    "normalDeviation": "Normalenabweichung",
+    "maximumEdgeLength": "Maximale Kantenlaenge",
+    "aspectRatio": "Seitenverhaeltnis",
+    "oneFilePerBody": "Eine Datei pro Koerper",
+    "fileBase": "Dateibasisname",
+    "outputParentFolder": "Ausgabe-Hauptordner",
+    "browseFolder": "Ordner waehlen...",
+    "outputFolderPreview": "Generierter Exportordner",
+    "notes": "Hinweise"
+  },
+  "prompts": {
+    "geometry": "Waehlen Sie einen Koerper, eine Komponente oder die Stammkomponente."
+  },
+  "choices": {
+    "parameter_select": {
+      "__select_parameter__": "Parameter auswaehlen",
+      "__manual_parameter__": "Namen manuell eingeben"
+    },
+    "parameter_modes": {
+      "number": "Nur Zahl",
+      "text": "Textbezeichnung mit Format"
+    },
+    "export_formats": {
+      "3mf": "3MF",
+      "stl_binary": "STL binaer",
+      "stl_ascii": "STL ASCII",
+      "obj": "OBJ"
+    },
+    "unit_types": {
+      "millimeter": "Millimeter",
+      "centimeter": "Zentimeter",
+      "meter": "Meter",
+      "inch": "Zoll",
+      "foot": "Fuss"
+    },
+    "refinement": {
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "custom": "Benutzerdefiniert"
+    }
+  },
+  "notes": {
+    "command": "Ablauf: Parameter setzen -> Konstruktion neu berechnen -> Netz exportieren -> wiederholen.\nDer ausgewaehlte Parameter wird nach dem Stapel wiederhergestellt, sofern dies in config.json nicht deaktiviert wurde.\nVorschau und Dreiecksanzahl werden absichtlich nicht angezeigt, weil sich das Modell waehrend des Stapels aendert.\nDieser Befehl exportiert immer Dateien; er sendet nicht jedes erzeugte Netz an ein Druckprogramm."
+  },
+  "messages": {
+    "no_design": "Oeffnen Sie ein Fusion-Design, bevor Sie 3D-Druck Stapel ausfuehren.",
+    "parameter_missing": "Es wurde kein Benutzerparameter mit dem Namen \"{name}\" gefunden. Bei Parameternamen wird Gross- und Kleinschreibung unterschieden.",
+    "progress": "Exportiere %v von %m Dateien...",
+    "large_batch_warning": "Sie sind dabei, {count} Dateien zu exportieren. Der Warnschwellenwert ist {threshold}. Fortfahren?",
+    "summary": "Exportordner:\n{folder}\n\nExportiert: {exported}",
+    "cancelled": "Vor Abschluss abgebrochen.",
+    "failed": "Fehlgeschlagen: {failed}\n{details}"
+  }
+}
