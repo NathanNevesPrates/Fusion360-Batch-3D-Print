@@ -12,7 +12,7 @@
 - Changed the default language setting to `auto`.
 - Normalized displayed paths and added the configurable `behavior.path_separator` setting.
 - Changed the parameter picker to start with a blank `Select a parameter` placeholder instead of defaulting to manual entry.
-- Changed the project license to PolyForm Noncommercial 1.0.0.
+- Kept the project under the MIT license.
 
 ## 0.2.0
 

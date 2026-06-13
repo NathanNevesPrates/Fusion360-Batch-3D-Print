@@ -1,63 +1,21 @@
-PolyForm Noncommercial License 1.0.0
-
-Accepted and effective as of 2020-06-10.
-https://polyformproject.org/licenses/noncommercial/1.0.0/
+MIT License
 
 Copyright (c) 2026 Batch 3D Print contributors
 
-The Licensor grants you a license to do everything with this software that would
-otherwise infringe the Licensor's copyright in it except for Sell it.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You may use, copy, modify, distribute, and share this software for
-noncommercial purposes, subject to the terms of this license.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-Definitions
-
-The "Licensor" is any person or entity offering this license.
-
-"Software" means the software the Licensor makes available under this license.
-
-"You" means anyone who gets a copy of the Software under this license.
-
-"Your company" means any legal entity, sole proprietorship, or other kind of
-organization that you work for, plus all organizations that have control over,
-are under the control of, or are under common control with that organization.
-Control means ownership of substantially all the assets of an entity or the
-power to direct its management and policies by vote, contract, or otherwise.
-Control can be direct or indirect.
-
-"Your licenses" are all the licenses granted to you for the Software under this
-license.
-
-"Use" means anything you do with the Software requiring one of Your Licenses.
-
-"Sell" means practicing any or all of Your Licenses to provide to others, for a
-fee or other consideration, a product or service whose value derives, entirely
-or substantially, from the functionality of the Software. Any fee or other
-consideration not based entirely on the value of the Software falls outside this
-definition.
-
-Notices
-
-You must ensure that anyone who gets a copy of any part of the Software from you
-also gets a copy of these terms.
-
-No Other Rights
-
-These terms do not imply any licenses other than Your Licenses.
-
-Termination
-
-If you use the Software in violation of these terms, such use is not licensed,
-and your licenses will automatically terminate. If the Licensor provides you
-with a notice of your violation, and you cease all violation of this license no
-later than 30 days after receipt of that notice, your licenses will be
-reinstated retroactively. However, if your violation caused irreparable harm to
-the Licensor, your licenses will not be reinstated.
-
-No Liability
-
-As far as the law allows, the Software comes as is, without any warranty or
-condition, and the Licensor will not be liable to you for any damages arising
-out of these terms or the use or nature of the Software, under any kind of
-legal claim.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

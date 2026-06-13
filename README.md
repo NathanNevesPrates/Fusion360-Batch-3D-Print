@@ -4,8 +4,7 @@ Batch 3D Print exports repeated mesh files while changing a Fusion user paramete
 
 ## License
 
-This project is available under the PolyForm Noncommercial 1.0.0 license.
-You can use, copy, modify, and share it, but you cannot sell it or monetize it.
+This project is available under the MIT license.
 
 ## What it exports
 
