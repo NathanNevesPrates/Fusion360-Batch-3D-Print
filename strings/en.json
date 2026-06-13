@@ -1,0 +1,174 @@
+{
+  "command": {
+    "name": "Batch 3D Print",
+    "description": "Batch export mesh files while incrementing a Fusion user parameter."
+  },
+  "buttons": {
+    "export": "Export",
+    "cancel": "Cancel"
+  },
+  "titles": {
+    "progress": "Batch 3D Print"
+  },
+  "dialog": {
+    "folder_title": "Choose output parent folder"
+  },
+  "groups": {
+    "geometry": "Geometry",
+    "sequence": "Parameter sequence",
+    "export": "Export settings",
+    "output": "Output"
+  },
+  "labels": {
+    "geometry": "Geometry to export",
+    "paramSelect": "User parameter",
+    "paramName": "Manual parameter name",
+    "paramMode": "Parameter value mode",
+    "textFormat": "Text format",
+    "startValue": "Starting value",
+    "increment": "Increment",
+    "fileCount": "Number of files",
+    "exportFormat": "Format",
+    "unitType": "Units",
+    "refinement": "Refinement",
+    "surfaceDeviation": "Surface deviation",
+    "normalDeviation": "Normal deviation",
+    "maximumEdgeLength": "Maximum edge length",
+    "aspectRatio": "Aspect ratio",
+    "oneFilePerBody": "One file per body",
+    "fileBase": "File base name",
+    "outputParentFolder": "Output parent folder",
+    "browseFolder": "Choose folder...",
+    "outputFolderPreview": "Generated export folder",
+    "notes": "Notes"
+  },
+  "prompts": {
+    "geometry": "Select one body, occurrence, or root component."
+  },
+  "choices": {
+    "parameter_select": {
+      "__manual_parameter__": "Type name manually"
+    },
+    "parameter_modes": {
+      "number": "Number only",
+      "text": "Text label using format"
+    },
+    "export_formats": {
+      "3mf": "3MF",
+      "stl_binary": "STL Binary",
+      "stl_ascii": "STL ASCII",
+      "obj": "OBJ"
+    },
+    "unit_types": {
+      "millimeter": "Millimeter",
+      "centimeter": "Centimeter",
+      "meter": "Meter",
+      "inch": "Inch",
+      "foot": "Foot"
+    },
+    "refinement": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "custom": "Custom"
+    }
+  },
+  "tooltips": {
+    "geometry": {
+      "base": "The model geometry exported for every generated file.",
+      "description": "Select one body, occurrence, or root component. The add-in reuses this selection after each parameter update."
+    },
+    "paramSelect": {
+      "base": "The user parameter that changes between exports.",
+      "description": "Existing user parameters are listed here. Choose the manual option if the parameter is not shown."
+    },
+    "paramName": {
+      "base": "Type the exact user parameter name.",
+      "description": "Parameter names are case-sensitive. This field is only used when the manual option is selected."
+    },
+    "paramMode": {
+      "base": "How the parameter receives each generated value.",
+      "description": "Number only writes values such as 1, 2, 3. Text label using format writes a string built from the Text format field."
+    },
+    "textFormat": {
+      "base": "Template for text parameters.",
+      "description": "Use {n} where the current number should appear, for example: Label {n}. Only used in text mode."
+    },
+    "startValue": {
+      "base": "The first number exported.",
+      "description": "For example, a starting value of 1 begins the sequence at 1."
+    },
+    "increment": {
+      "base": "The amount added after each export.",
+      "description": "Use 1 for 1, 2, 3. Use 5 for 5, 10, 15. Negative values are allowed."
+    },
+    "fileCount": {
+      "base": "How many files to export.",
+      "description": "The default is intentionally small to reduce accidental large batch exports."
+    },
+    "exportFormat": {
+      "base": "The mesh file format to create.",
+      "description": "Available formats are 3MF, STL Binary, STL ASCII, and OBJ."
+    },
+    "unitType": {
+      "base": "Distance units for STL and OBJ exports.",
+      "description": "This setting is disabled for 3MF because Fusion's 3MF export options do not expose the same unit field."
+    },
+    "refinement": {
+      "base": "Mesh quality preset.",
+      "description": "Low, Medium, and High use Fusion's preset mesh refinement settings. Custom exposes advanced fields below."
+    },
+    "surfaceDeviation": {
+      "base": "Maximum surface deviation in centimeters.",
+      "description": "Only used when Refinement is Custom. Larger values create coarser meshes; smaller values create denser meshes."
+    },
+    "normalDeviation": {
+      "base": "Maximum normal deviation in degrees.",
+      "description": "Only used when Refinement is Custom. This controls how far mesh normals can deviate from the model surface normals."
+    },
+    "maximumEdgeLength": {
+      "base": "Maximum triangle edge length in centimeters.",
+      "description": "Only used when Refinement is Custom. Leave at 0 to avoid forcing a maximum edge length."
+    },
+    "aspectRatio": {
+      "base": "Triangle aspect ratio limit.",
+      "description": "Only used when Refinement is Custom. Leave at 0 to avoid forcing an aspect ratio."
+    },
+    "oneFilePerBody": {
+      "base": "Export each body separately when possible.",
+      "description": "Used when exporting an occurrence or root component. Fusion appends body names when it creates multiple files."
+    },
+    "fileBase": {
+      "base": "Base name used for files and the generated folder.",
+      "description": "When a selection is made, this field is filled from the selected body/component name. You can edit it before exporting."
+    },
+    "outputParentFolder": {
+      "base": "Parent location for the generated batch folder.",
+      "description": "Use the Choose folder button to set this path. The add-in creates a subfolder inside it."
+    },
+    "browseFolder": {
+      "base": "Open a folder picker.",
+      "description": "Choose the parent folder where the generated batch export folder should be created."
+    },
+    "outputFolderPreview": {
+      "base": "Preview of the folder that will be created.",
+      "description": "The folder name is generated from the File base name plus the configured suffix."
+    },
+    "notes": {
+      "base": "General workflow notes.",
+      "description": "Edit strings/en.json to change this text for your own release."
+    }
+  },
+  "notes": {
+    "command": "Workflow: set parameter -> recompute design -> export mesh -> repeat.\nThe selected parameter is restored after the batch unless disabled in config.json.\nPreview and triangle count are intentionally not shown because the model changes during the batch.\nThis command always exports files; it does not send every generated mesh to a print utility."
+  },
+  "messages": {
+    "no_design": "Open a Fusion design before running Batch 3D Print.",
+    "parameter_missing": "No user parameter named \"{name}\" was found. Parameter names are case-sensitive.",
+    "progress": "Exporting %v of %m files...",
+    "large_batch_warning": "You are about to export {count} files. The warning threshold is {threshold}. Continue?",
+    "summary": "Export folder:\n{folder}\n\nExported: {exported}",
+    "cancelled": "Cancelled before completion.",
+    "failed": "Failed: {failed}\n{details}"
+  }
+}

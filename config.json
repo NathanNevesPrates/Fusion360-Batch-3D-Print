@@ -1,0 +1,38 @@
+{
+  "language": "en",
+  "defaults": {
+    "parameter_name": "",
+    "parameter_mode": "number",
+    "text_format": "Label {n}",
+    "start_value": 1,
+    "increment": 1,
+    "file_count": 5,
+    "export_format": "3mf",
+    "unit_type": "millimeter",
+    "refinement": "medium",
+    "custom_refinement": {
+      "surface_deviation_cm": 0.01,
+      "normal_deviation_deg": 15.0,
+      "maximum_edge_length_cm": 0.0,
+      "aspect_ratio": 0.0
+    },
+    "file_base_name": "BatchExport",
+    "output_parent_folder": "",
+    "one_file_per_body": false
+  },
+  "limits": {
+    "min_file_count": 1,
+    "max_file_count": 1000000,
+    "warn_if_file_count_above": 100,
+    "min_integer_value": -1000000000,
+    "max_integer_value": 1000000000
+  },
+  "behavior": {
+    "folder_suffix": "_BatchExport",
+    "restore_parameter_after_export": true,
+    "avoid_overwriting_files": true,
+    "create_unique_output_folder": false,
+    "auto_name_from_selection": true,
+    "auto_open_output_folder": false
+  }
+}

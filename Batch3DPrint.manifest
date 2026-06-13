@@ -1,0 +1,13 @@
+{
+  "autodeskProduct": "Fusion360",
+  "type": "addin",
+  "id": "Batch3DPrint.Community",
+  "author": "Batch 3D Print contributors",
+  "description": {
+    "": "Batch export mesh files by incrementing a Fusion user parameter before each export."
+  },
+  "version": "0.2.0",
+  "runOnStartup": false,
+  "supportedOS": "windows|mac",
+  "editEnabled": true
+}
